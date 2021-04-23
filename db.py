@@ -78,13 +78,16 @@ def loginUser(user, password):
 
 
 
-#------ F U N C T I O N    F O R   S A V I N G    R E C O V E R Y -------
+#------ F U N C T I O N  F O R  C R E A T I N G  A C C O U N T -------
 @conectionDB
-def storeRecovery(ans, option):
-    #password = cipher_suite.encrypt(bytes(password, encoding='utf-8'))
-    data = (ans, option)
-    myCursor.execute("INSERT INTO USERS (ANSWER, OPTION) VALUES('%s', '%s')" % (data))
-#------ E N D   F U N C T I O N ----------
+def createUser(user, password, ans, opt):
+    """Function to create new user"""
+    passwd = cipher_suite.encrypt(bytes(password, encoding='utf-8'))
+    data = (user, password, ans, opt)
+    myCursor.execute("INSERT INTO USERS VALUES(?,?,?,?)", data)
+#------ E N D  F U N C T I O N -------
+
+
 
 
 #------ F U N C T I O N   F O R   P A S S   R E C O V E R Y -------
@@ -104,18 +107,6 @@ def passRecovery(ans, opt, user):
     else:
         return "error"
 #------ E N D   F U N C T I O N -------------
-
-
-#------ F U N C T I O N  F O R  C R E A T I N G  A C C O U N T -------
-@conectionDB
-def createUser(user, password):
-    """Function to create new user"""
-    passwd = cipher_suite.encrypt(bytes(password, encoding='utf-8'))
-    #data = (user, password)
-    uu = user
-    pp = passwd
-    myCursor.execute("INSERT INTO USERS (USER, PASSWORD) VALUES('%s', '%s')" % (uu, pp))
-#------ E N D  F U N C T I O N -------
 
 
 
