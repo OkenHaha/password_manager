@@ -7,6 +7,7 @@ import subprocess
 from subprocess import call
 import tkinter.font as font
 
+db.createDB()
 
 root = Tk()
 root.title("Password Manager")
@@ -16,58 +17,58 @@ root.config(menu=menu)
 
 
 
-'''
 
-def password_recover(self):
-	self.recoverWin = Tk()
-	self.recoverWin.title("Recover Password")
-	self.recoverWin.geometry("400x400")
-	self.v2 = StringVar()
-	self.v2.set("one")
+
+def password_recover():
+	recoverWin = Tk()
+	recoverWin.title("Recover Password")
+	recoverWin.geometry("400x400")
+	v2 = StringVar()
+	v2.set("one")
 
 	#-------- L A Y O U T   D E S I G N -----------------
-	self.title = Label(self.recoverWin, text="Recover Password", font=("Arial", 20, "bold"))
-	self.title.grid(row=0, columnspan=1, column=0)
+	title = Label(recoverWin, text="Recover Password", font=("Arial", 20, "bold"))
+	title.grid(row=0, columnspan=1, column=0)
 
-	self.msg = Label(self.recoverWin, text="Please select a question and type in your answer to save it")
-	self.msg.grid(row=1, column=0)
+	msg = Label(recoverWin, text="Please select a question and type in your answer to save it")
+	msg.grid(row=1, column=0)
 
-	self.gapL = Label(self.recoverWin, text="\n").grid(row=2,column=0)
+	gapL = Label(recoverWin, text="\n").grid(row=2,column=0)
 
-	self.option1 = Radiobutton(self.recoverWin, text="What is the name of your Best Friend", variable=v2, value="one").grid(row=3, column=0, columnspan=1, sticky='W')
-	self.option2 = Radiobutton(self.recoverWin, text="What is the name of your favorite book?", variable=v2, value="two").grid(row=4, column=0, columnspan=1, sticky='W')
-	self.option3 = Radiobutton(self.recoverWin, text="What is your special talent?", variable=v2, value="three").grid(row=5, column=0, columnspan=1, sticky='W')
+	option1 = Radiobutton(recoverWin, text="What is the name of your Best Friend", variable=v2, value="one").grid(row=3, column=0, columnspan=1, sticky='W')
+	option2 = Radiobutton(recoverWin, text="What is the name of your favorite book?", variable=v2, value="two").grid(row=4, column=0, columnspan=1, sticky='W')
+	option3 = Radiobutton(recoverWin, text="What is your special talent?", variable=v2, value="three").grid(row=5, column=0, columnspan=1, sticky='W')
 
-	self.username = Label(self.recoverWin, text="Username:", pady=10).grid(row=6, column=0,sticky=W, columnspan=1)
-	self.unameE = Entry(self.recoverWin)
-	self.unameE.grid(row=6, column=0, padx=90, sticky=W)
+	username = Label(recoverWin, text="Username:", pady=10).grid(row=6, column=0,sticky=W, columnspan=1)
+	unameE = Entry(recoverWin)
+	unameE.grid(row=6, column=0, padx=90, sticky=W)
 
-	self.password = Label(self.recoverWin, text="Answer:", pady=10).grid(row=7, column=0,sticky=W, columnspan=1)
-	self.passwordE = Entry(self.recoverWin)
-	self.passwordE.grid(row=7, column=0, padx=90, sticky=W)
+	password = Label(recoverWin, text="Answer:", pady=10).grid(row=7, column=0,sticky=W, columnspan=1)
+	passwordE = Entry(recoverWin)
+	passwordE.grid(row=7, column=0, padx=90, sticky=W)
 
 	def get_ans():
-		opt2 = self.v2.get()
-		ans2 = self.passwordE.get()
-		um = self.unameE.get()
+		opt2 = v2.get()
+		ans2 = passwordE.get()
+		um = unameE.get()
 		value = db.passRecovery(ans2, opt2, um)
 		
 		if ans2 == "" or um == "":
-		    self.gapL = Label(self.recoverWin, text="Blank Entries. Please fill all the details!", fg="red").grid(row=2,column=0)
+		    gapL = Label(recoverWin, text="Blank Entries. Please fill all the details!", fg="red").grid(row=2,column=0)
 		elif value == answer:
-		    self.gapL = Label(self.recoverWin, text=answer)
+		    gapL = Label(recoverWin, text=answer)
 		elif value == "false":
-		    self.gapL = Label(self.recoverWin, text="Wrong Option Selected", fg="red").grid(row=2,column=0)
+		    gapL = Label(recoverWin, text="Wrong Option Selected", fg="red").grid(row=2,column=0)
 		elif value == "no":
-		    self.gapL = Label(self.recoverWin, text="Wrong Answer. Please Contact with admin if you forgot the password", fg="red").grid(row=2,column=0)
+		    gapL = Label(recoverWin, text="Wrong Answer. Please Contact with admin if you forgot the password", fg="red").grid(row=2,column=0)
 		elif value == "error":
-		    self.gapL = Label(self.recoverWin, text="Wrong Username", fg="red").grid(row=2,column=0)
+		    gapL = Label(recoverWin, text="Wrong Username", fg="red").grid(row=2,column=0)
 
-	self.submit = Button(self.recoverWin, text="Submit", width=20, height=2, bg="green", fg="white", command=get_ans).grid(row=9, padx=10, pady=10,column=0, sticky=W,)
+	submit = Button(recoverWin, text="Submit", width=20, height=2, bg="green", fg="white", command=get_ans).grid(row=9, padx=10, pady=10,column=0, sticky=W,)
 	#------- E N D   L A Y O U T ----------
-	self.recoverWin.mainloop()
+	recoverWin.mainloop()
 
-'''
+
 
 
 
@@ -75,11 +76,12 @@ def password_recover(self):
 #------------------- R E C O V E R Y   L A Y O U T -------------------------
 #This is for storing a password recovery option
 def recoveryOpt():
+    root.destroy()
     recoveryWin = Tk()
     recoveryWin.title("Security Question")
     recoveryWin.geometry("400x400")
-    v2 = StringVar()
-    v2.set("one")
+    v = StringVar()
+    v.set("one")
 
     #-------- L A Y O U T   D E S I G N -----------------
     title = Label(recoveryWin, text="Password Recovery option", font=("Arial", 20, "bold"))
@@ -90,16 +92,16 @@ def recoveryOpt():
 
     gapL = Label(recoveryWin, text="\n").grid(row=2,column=0)
 
-    option1 = Radiobutton(recoveryWin, text="What is the name of your Best Friend", variable=v2, value="one").grid(row=3, column=0, sticky=W)
-    option2 = Radiobutton(recoveryWin, text="What is the name of your favorite book?", variable=v2, value="two").grid(row=4, column=0, sticky=W)
-    option3 = Radiobutton(recoveryWin, text="What is your special talent?", variable=v2, value="three").grid(row=5, column=0, sticky=W)
+    option1 = Radiobutton(recoveryWin, text="What is the name of your Best Friend", variable=v, value="one").grid(row=3, column=0, sticky=W)
+    option2 = Radiobutton(recoveryWin, text="What is the name of your favorite book?", variable=v, value="two").grid(row=4, column=0, sticky=W)
+    option3 = Radiobutton(recoveryWin, text="What is your special talent?", variable=v, value="three").grid(row=5, column=0, sticky=W)
 
     label = Label(recoveryWin, text="Your answer: ", font=("bold")).grid(row=6, column=0,pady=20, padx=10,stick=W)
     answer = Entry(recoveryWin, width=30, border=3, fg="black", bg="#eeeeee")
     answer.grid(row=7, column=0, columnspan=2,padx=10, sticky=W)
 
     def get_ans():
-    	opt2 = v2.get()
+    	opt2 = v.get()
     	ans2 = passwordE.get()
     	um = unameE.get()
     	val = db.passRecovery(ans2, opt2, um)
@@ -115,7 +117,7 @@ def recoveryOpt():
     	elif value == "error":
     	    gapL = Label(recoverWin, text="Wrong Username")
 
-    submit = Button(recoveryWin, text="Submit", width=20, height=2, bg="green", fg="white", command=get_ans).grid(row=8, padx=10, pady=10,column=0, sticky=W,)
+    submit = Button(recoveryWin, text="Submit", width=20, height=2, bg="green", fg="white", command=give_ans).grid(row=8, padx=10, pady=10,column=0, sticky=W,)
     recoveryWin.mainloop()
 #------------- E N D    L A Y O U T ---------------
 
@@ -227,7 +229,7 @@ def login():
 
 	login = Button(LoginWin, text="Login", width=10, fg="green", font="10", command=sign_in).grid(row=5, column=0, pady=15)
 	line = font.Font(underline=1)
-	reset = Button(LoginWin, text="Forgot Password?", width=15, fg="blue", border="0", font=(line), command=recoveryOpt).grid(row=5, column=1)
+	reset = Button(LoginWin, text="Forgot Password?", width=15, fg="blue", border="0", font=(line), command=password_recover).grid(row=5, column=1)
 #---------- E N D    F O R    L O G I N -------
 
 
@@ -311,4 +313,3 @@ logB = Button(root, text="Already have an account? Login", fg="blue", command=lo
 
 if __name__ == "__main__":
 	root.mainloop()
-	db.createDB()
