@@ -56,7 +56,7 @@ def password_recover():
 		if ans2 == "" or um == "":
 		    gapL = Label(recoverWin, text="Blank Entries. Please fill all the details!", fg="red").grid(row=2,column=0)
 		elif value == answer:
-		    gapL = Label(recoverWin, text=answer)
+		    gapL = Label(recoverWin, text=value).grid(row=2,column=0)
 		elif value == "false":
 		    gapL = Label(recoverWin, text="Wrong Option Selected", fg="red").grid(row=2,column=0)
 		elif value == "no":
@@ -64,62 +64,11 @@ def password_recover():
 		elif value == "error":
 		    gapL = Label(recoverWin, text="Wrong Username", fg="red").grid(row=2,column=0)
 
-	submit = Button(recoverWin, text="Submit", width=20, height=2, bg="green", fg="white", command=get_ans).grid(row=9, padx=10, pady=10,column=0, sticky=W,)
+	submit = Button(recoverWin, text="Submit", width=20, height=2, bg="green", fg="white", command=get_ans).grid(row=9, padx=10, pady=10,column=0, sticky=W)
 	#------- E N D   L A Y O U T ----------
 	recoverWin.mainloop()
 
 
-
-
-
-
-#------------------- R E C O V E R Y   L A Y O U T -------------------------
-#This is for storing a password recovery option
-def recoveryOpt():
-    root.destroy()
-    recoveryWin = Tk()
-    recoveryWin.title("Security Question")
-    recoveryWin.geometry("400x400")
-    v = StringVar()
-    v.set("one")
-
-    #-------- L A Y O U T   D E S I G N -----------------
-    title = Label(recoveryWin, text="Password Recovery option", font=("Arial", 20, "bold"))
-    title.grid(row=0, columnspan=1, column=0)
-
-    msg = Label(recoveryWin, text="Please select a question and type in your answer to save it")
-    msg.grid(row=1, column=0)
-
-    gapL = Label(recoveryWin, text="\n").grid(row=2,column=0)
-
-    option1 = Radiobutton(recoveryWin, text="What is the name of your Best Friend", variable=v, value="one").grid(row=3, column=0, sticky=W)
-    option2 = Radiobutton(recoveryWin, text="What is the name of your favorite book?", variable=v, value="two").grid(row=4, column=0, sticky=W)
-    option3 = Radiobutton(recoveryWin, text="What is your special talent?", variable=v, value="three").grid(row=5, column=0, sticky=W)
-
-    label = Label(recoveryWin, text="Your answer: ", font=("bold")).grid(row=6, column=0,pady=20, padx=10,stick=W)
-    answer = Entry(recoveryWin, width=30, border=3, fg="black", bg="#eeeeee")
-    answer.grid(row=7, column=0, columnspan=2,padx=10, sticky=W)
-
-    def get_ans():
-    	opt2 = v.get()
-    	ans2 = passwordE.get()
-    	um = unameE.get()
-    	val = db.passRecovery(ans2, opt2, um)
-    	
-    	if ans2 == "" or um == "":
-    	    messagebox.showwarning("Blank Entries", "Please Fill all the required details")
-    	elif value == answer:
-    	    gapL = Label(recoverWin, text=answer)
-    	elif value == "false":
-    	    gapL = Label(recoverWin, text="Wrong Option Selected")
-    	elif value == "no":
-    	    gapL = Label(recoverWin, text="Wrong Answer. Please Contact with admin if you forgot the password")
-    	elif value == "error":
-    	    gapL = Label(recoverWin, text="Wrong Username")
-
-    submit = Button(recoveryWin, text="Submit", width=20, height=2, bg="green", fg="white", command=give_ans).grid(row=8, padx=10, pady=10,column=0, sticky=W,)
-    recoveryWin.mainloop()
-#------------- E N D    L A Y O U T ---------------
 
 
 
@@ -270,7 +219,7 @@ title.grid(row=4, columnspan=1, column=0,pady=10)
 msg = Label(root, text="Please select a question and\ntype in your answer to save it")
 msg.grid(row=5, column=0)
 
-gapL = Label(root, text="\n").grid(row=6,column=0)
+gapL2 = Label(root, text="\n").grid(row=6,column=0)
 
 option1 = Radiobutton(root, text="What is the name of your Best Friend", variable=v, value="one").grid(row=7, column=0, sticky=W)
 option2 = Radiobutton(root, text="What is the name of your favorite book?", variable=v, value="two").grid(row=8, column=0, sticky=W)
@@ -293,11 +242,12 @@ def create_account():
     val = db.loginUser(uname, psswd)
 
     if ans == "" or uname == "" or psswd == "":
-    	gapL = Label(root, text="Empty entried found. Please fill all the details", fg="red").grid(row=6,column=0)
+    	gapL2 = Label(root, text="Empty entried found. Please fill all the details", fg="red").grid(row=6,column=0)
     elif val == "yes":
-    	gapL = Label(root, text="User already exist. Please login", fg="green").grid(row=6,column=0)
+    	gapL2 = Label(root, text="User already exist. Please login", fg="green").grid(row=6,column=0)
     elif val == "error":
     	db.createUser(uname, psswd, ans, opt)
+
     root.destroy()
     dash()
 
