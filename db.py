@@ -83,7 +83,7 @@ def loginUser(user, password):
 def createUser(user, password, ans, opt):
     """Function to create new user"""
     passwd = cipher_suite.encrypt(bytes(password, encoding='utf-8'))
-    data = (user, password, ans, opt)
+    data = (user, passwd, ans, opt)
     myCursor.execute("INSERT INTO USERS VALUES(?,?,?,?)", data)
 #------ E N D  F U N C T I O N -------
 
@@ -93,10 +93,10 @@ def createUser(user, password, ans, opt):
 #------ F U N C T I O N   F O R   P A S S   R E C O V E R Y -------
 @conectionDB
 def passRecovery(ans, opt, user):
-    myCursor.execute("SELECT ANSWER FROM USERS WHERE USER='"+user+"' AND OPTION='"+opt+"'")
+    myCursor.execute("SELECT ANSWER, OPTION FROM USERS WHERE USER='"+user+"' AND OPTION='"+opt+"'")
     answer = myCursor.fetchall()
-    myAnotherCursor.execute("SELECT OPTION FROM USERS WHERE USER='"+user+"'")
-    optn = myAnotherCursor.fetchall()
+    #myAnotherCursor.execute("SELECT OPTION FROM USERS WHERE USER='"+user+"'")
+    #optn = myAnotherCursor.fetchall()
     
     if optn == opt and answer == ans:
         return answer
