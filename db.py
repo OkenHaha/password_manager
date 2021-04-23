@@ -14,8 +14,8 @@ def conectionDB(func):
         global myAnotherCursor
         myConection = sqlite3.connect("PasswordsDB")
         myCursor = myConection.cursor()
-        myConnection2 = sqlite3.connect("PasswordsDB")
-        myAnotherCursor = myConnection2.cursor()
+        #myConnection2 = sqlite3.connect("PasswordsDB")
+        #myAnotherCursor = myConnection2.cursor()
 
         result = func(*args, **kwargs)
 
@@ -93,16 +93,18 @@ def createUser(user, password, ans, opt):
 #------ F U N C T I O N   F O R   P A S S   R E C O V E R Y -------
 @conectionDB
 def passRecovery(ans, opt, user):
-    myCursor.execute("SELECT ANSWER, OPTION FROM USERS WHERE USER='"+user+"' AND OPTION='"+opt+"'")
-    answer = myCursor.fetchall()
-    #myAnotherCursor.execute("SELECT OPTION FROM USERS WHERE USER='"+user+"'")
-    #optn = myAnotherCursor.fetchall()
+    a = myCursor.execute("SELECT ANSWER FROM USERS WHERE USER='"+user+"' AND OPTION='"+opt+"'")
+    a = myCursor.fetchall()
+    o = myCursor.execute("SELECT OPTION FROM USERS WHERE USER='"+user+"'")
+    o = myCursor.fetchall()
+    p = myCursor.execute("SELECT PASSWORD FROM USERS WHERE USER='"+user+"'")
+    p = myCursor.fetchall()
     
-    if optn == opt and answer == ans:
-        return answer
-    elif optn != opt:
+    if o == opt and a == ans:
+        return p
+    elif o != opt:
         return "false"
-    elif answer != ans:
+    elif a != ans:
         return "no"
     else:
         return "error"
